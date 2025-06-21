@@ -79,3 +79,13 @@ type FilmPriceListResp struct {
 	Total int64                 `json:"total"`
 	Rows  []*dao.FilmPriceModel `json:"rows"`
 }
+
+type FilmPriceHistoryListReq struct {
+	models.ListBaseReq
+	LinkID string `json:"link_id" form:"link_id"`
+}
+
+type FilmPriceHistoryListResp struct {
+	Total int64                        `json:"total"`
+	Rows  []*dao.FilmPriceHistoryModel `json:"rows"`
+}

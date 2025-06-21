@@ -29,6 +29,9 @@ type Service interface {
 
 	FilmPriceList(req *model.FilmPriceListReq) (*model.FilmPriceListResp, error)
 	FilmPriceDetail(id string) (*dao.FilmPriceModel, error)
+
+	FilmPriceHistoryList(req *model.FilmPriceHistoryListReq) (*model.FilmPriceHistoryListResp, error)
+	FilmPriceHistoryDetail(id string) (*dao.FilmPriceHistoryModel, error)
 }
 
 type service struct {

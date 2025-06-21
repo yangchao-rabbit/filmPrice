@@ -32,6 +32,9 @@ type Handler interface {
 
 	FilmPriceList() gin.HandlerFunc
 	FilmPriceDetail() gin.HandlerFunc
+
+	FilmPriceHistoryList() gin.HandlerFunc
+	FilmPriceHistoryDetail() gin.HandlerFunc
 }
 
 type handler struct {
@@ -67,5 +70,11 @@ func (h *handler) Registry(r gin.IRouter) {
 	{
 		priceAPI.GET("", h.FilmPriceList())
 		priceAPI.GET("/:id", h.FilmPriceDetail())
+	}
+
+	priceHistoryAPI := r.Group("/price-history")
+	{
+		priceHistoryAPI.GET("", h.FilmPriceHistoryList())
+		priceHistoryAPI.GET("/:id", h.FilmPriceHistoryDetail())
 	}
 }

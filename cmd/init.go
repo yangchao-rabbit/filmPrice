@@ -33,6 +33,7 @@ var initCmd = &cobra.Command{
 			&filmDao.FilmModel{},
 			&filmDao.FilmLinkModel{},
 			&filmDao.FilmPriceModel{},
+			&filmDao.FilmPriceHistoryModel{},
 		)
 
 		// 创建管理用户

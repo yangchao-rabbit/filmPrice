@@ -5,6 +5,7 @@ import (
 	"filmPrice/internal/models"
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
+	"time"
 )
 
 type FilmModel struct {
@@ -43,7 +44,7 @@ type FilmLinkModel struct {
 	// 平台
 	Platform string `json:"platform" gorm:"type:varchar(255)"`
 	Name     string `json:"name" gorm:"type:varchar(255)"`
-	Url      string `json:"url" gorm:"type:varchar(255);unique"`
+	Url      string `json:"url" gorm:"type:varchar(255)"`
 	IsActive bool   `json:"is_active" gorm:"type:tinyint"`
 
 	Film   FilmModel        `json:"film" gorm:"foreignKey:FilmID;references:ID"`
@@ -72,6 +73,24 @@ func (f *FilmPriceModel) TableName() string {
 }
 
 func (f *FilmPriceModel) BeforeCreate(tx *gorm.DB) (err error) {
+	if f.ID == "" {
+		f.ID = config.Snowflake.Generate().String()
+	}
+	return
+}
+
+type FilmPriceHistoryModel struct {
+	models.BaseModel
+	LinkID    string          `json:"link_id" gorm:"type:bigint;index"`
+	Price     decimal.Decimal `json:"price" gorm:"type:decimal(10,2)"`
+	CheckedAt time.Time       `json:"checked_at" gorm:"index"`
+}
+
+func (f *FilmPriceHistoryModel) TableName() string {
+	return "film_price_history"
+}
+
+func (f *FilmPriceHistoryModel) BeforeCreate(tx *gorm.DB) (err error) {
 	if f.ID == "" {
 		f.ID = config.Snowflake.Generate().String()
 	}
